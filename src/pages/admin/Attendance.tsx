@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Download, Calendar, Filter, RefreshCw } from "lucide-react";
+import { Search, Download, Calendar, Filter, RefreshCw, Sunrise, Sunset } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -84,19 +84,19 @@ export default function Attendance() {
       {/* Stats */}
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="animate-fade-in cursor-pointer hover:shadow-md transition-all" onClick={() => setScanTypeFilter('all')}>
+        <Card className="animate-fade-in">
           <CardContent className="p-4">
             <p className="text-sm text-muted-foreground">Total Scans Today</p>
             <p className="text-2xl font-bold">847</p>
           </CardContent>
         </Card>
-        <Card className="animate-fade-in cursor-pointer hover:shadow-md transition-all" onClick={() => setScanTypeFilter('boarding')}>
+        <Card className="animate-fade-in">
           <CardContent className="p-4">
             <p className="text-sm text-muted-foreground">Morning Boardings</p>
             <p className="text-2xl font-bold text-success">423</p>
           </CardContent>
         </Card>
-        <Card className="animate-fade-in cursor-pointer hover:shadow-md transition-all" onClick={() => setScanTypeFilter('alighting')}>
+        <Card className="animate-fade-in">
           <CardContent className="p-4">
             <p className="text-sm text-muted-foreground">Evening Returns</p>
             <p className="text-2xl font-bold text-primary">424</p>
@@ -162,6 +162,32 @@ export default function Attendance() {
                 </SelectContent>
               </Select>
             </div>
+          </div>
+
+          <div className="flex gap-4 mt-6 pt-6 border-t border-slate-100 dark:border-slate-800">
+            <Button
+              variant={scanTypeFilter === 'boarding' ? "default" : "outline"}
+              className={cn(
+                "flex-1 gap-2 h-12 text-sm font-semibold transition-all",
+                scanTypeFilter === 'boarding' ? "bg-orange-500 hover:bg-orange-600 border-none shadow-lg shadow-orange-500/20" : "hover:border-orange-500 hover:text-orange-500"
+              )}
+              onClick={() => setScanTypeFilter(scanTypeFilter === 'boarding' ? 'all' : 'boarding')}
+            >
+              <Sunrise className={cn("w-5 h-5", scanTypeFilter === 'boarding' ? "text-white" : "text-orange-500")} />
+              Morning Boarded
+            </Button>
+
+            <Button
+              variant={scanTypeFilter === 'alighting' ? "default" : "outline"}
+              className={cn(
+                "flex-1 gap-2 h-12 text-sm font-semibold transition-all",
+                scanTypeFilter === 'alighting' ? "bg-purple-600 hover:bg-purple-700 border-none shadow-lg shadow-purple-500/20" : "hover:border-purple-600 hover:text-purple-600"
+              )}
+              onClick={() => setScanTypeFilter(scanTypeFilter === 'alighting' ? 'all' : 'alighting')}
+            >
+              <Sunset className={cn("w-5 h-5", scanTypeFilter === 'alighting' ? "text-white" : "text-purple-500")} />
+              Evening Returns
+            </Button>
           </div>
         </CardContent>
       </Card>

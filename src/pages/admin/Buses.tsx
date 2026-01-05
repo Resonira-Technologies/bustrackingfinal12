@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bus, Route as RouteIcon, Plus, Edit, Trash2, MoreVertical, MapPin, Search, ChevronRight, Clock, Navigation, Share2, MessageSquare, RefreshCw, User, Phone, Shield, Users, X } from "lucide-react";
+import { Bus, Route as RouteIcon, Plus, Edit, Trash2, MoreVertical, MapPin, Search, ChevronRight, Clock, Navigation, Share2, MessageSquare, RefreshCw, User, Phone, Shield, Users, X, Cpu, FileText, Image } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -73,78 +73,93 @@ const RouteTimeline = ({ route, buses }: { route: any, buses: any[] }) => {
       </div>
 
       {/* Timeline Content */}
-      <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-3 sm:p-8 custom-scrollbar">
         {/* Column Headers */}
-        <div className="flex text-xs text-slate-500 font-medium mb-4 px-2">
-          <div className="w-20 text-right">Arrival</div>
-          <div className="w-16"></div> {/* Spacer for timeline line */}
-          <div className="flex-1">Station</div>
-          <div className="w-20 text-right">Departure</div>
+        <div className="flex text-[10px] sm:text-sm text-slate-500 font-semibold mb-4 sm:mb-6 px-2 sm:px-4">
+          <div className="w-14 sm:w-24 text-right pr-2 sm:pr-4">Arrival</div>
+          <div className="w-10 sm:w-20"></div> {/* Spacer for timeline line */}
+          <div className="flex-1">Station / Stop Name</div>
+          <div className="w-14 sm:w-24 text-right pl-2 sm:pl-4">Departure</div>
         </div>
 
-        <div className="relative">
+        <div className="relative max-w-5xl mx-auto">
           {/* Vertical Line */}
-          <div className="absolute left-[94px] top-4 bottom-4 w-1 bg-slate-700/50 rounded-full z-0"></div>
+          <div className="absolute left-[63px] sm:left-[118px] top-4 bottom-4 w-1 bg-slate-700/50 rounded-full z-0"></div>
 
           {/* Completed Line Overlay */}
           <div
-            className="absolute left-[94px] top-4 w-1 bg-blue-500 rounded-full z-0 transition-all duration-1000 ease-in-out"
+            className="absolute left-[63px] sm:left-[118px] top-4 w-1 bg-blue-500 rounded-full z-0 transition-all duration-1000 ease-in-out shadow-[0_0_10px_rgba(59,130,246,0.3)]"
             style={{ height: `${(currentStopIndex / (scheduleData.length - 1)) * 100}%` }}
           ></div>
 
           {scheduleData.map((stop: any, index: number) => (
-            <div key={index} className={cn("flex items-start min-h-[80px] group relative z-10", stop.isCurrent && "mt-4 mb-4")}>
+            <div key={index} className={cn("flex items-start min-h-[80px] sm:min-h-[100px] group relative z-10", stop.isCurrent && "mt-4 mb-4 sm:mt-6 sm:mb-6")}>
               {/* Left: Arrival Time */}
-              <div className="w-20 text-right pt-1">
-                <div className={cn("text-sm font-medium", stop.isPassed ? "text-slate-500" : "text-slate-200")}>
+              <div className="w-14 sm:w-24 text-right pt-2 pr-2 sm:pr-4 shrink-0">
+                <div className={cn("text-xs sm:text-base font-bold", stop.isPassed ? "text-slate-500" : "text-white")}>
                   {stop.arrivalTime}
                 </div>
-                <div className="text-xs text-red-400 mt-0.5 hidden group-hover:block">DELAY 5m</div>
+                {stop.isCurrent && (
+                  <div className="text-[8px] sm:text-[10px] text-blue-400 font-bold tracking-tighter mt-1 animate-pulse uppercase">LIVE</div>
+                )}
               </div>
 
               {/* Center: Timeline Marker */}
-              <div className="w-16 flex flex-col items-center justify-start relative pt-1.5">
+              <div className="w-10 sm:w-20 flex flex-col items-center justify-start relative pt-2 shrink-0">
                 {stop.isCurrent ? (
                   <div className="relative z-20">
-                    <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.5)] animate-pulse">
-                      <Bus className="w-5 h-5 text-white" />
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.4)] sm:shadow-[0_0_20px_rgba(59,130,246,0.6)] animate-pulse ring-2 sm:ring-4 ring-slate-950">
+                      <Bus className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                     </div>
-                    <div className="absolute top-10 left-1/2 -translate-x-1/2 h-full w-0.5 bg-dashed border-l-2 border-blue-500/50 h-8"></div>
                   </div>
                 ) : (
                   <div className={cn(
-                    "w-3 h-3 rounded-full border-2 z-20 transition-colors bg-slate-900",
-                    stop.isPassed ? "border-blue-500 bg-blue-500" : "border-slate-600"
+                    "w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 z-20 transition-all duration-300 ring-2 sm:ring-4 ring-slate-950",
+                    stop.isPassed ? "border-blue-500 bg-blue-500" : "border-slate-600 bg-slate-900",
+                    "group-hover:scale-125"
                   )}></div>
                 )}
               </div>
 
               {/* Right: Station Info */}
-              <div className="flex-1 pt-1 pb-8 border-b border-slate-800/50 group-last:border-0 pl-2">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <div className={cn("font-medium text-base", stop.isCurrent ? "text-blue-400 text-lg" : "text-slate-200")}>
+              <div className={cn(
+                "flex-1 pt-2 pb-6 sm:pb-10 border-b border-slate-800/50 group-last:border-0 pl-2 sm:pl-4 transition-colors",
+                stop.isCurrent ? "bg-blue-500/5 rounded-lg sm:rounded-xl border-blue-500/20 px-2 sm:px-4" : ""
+              )}>
+                <div className="flex justify-between items-start gap-2 sm:gap-4">
+                  <div className="min-w-0 flex-1">
+                    <div className={cn("font-bold transition-all truncate sm:whitespace-normal",
+                      stop.isCurrent ? "text-blue-400 text-lg sm:text-2xl" : "text-slate-100 text-sm sm:text-lg",
+                      stop.isPassed && "text-slate-400"
+                    )}>
                       {stop.name}
                     </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-slate-500">{stop.distance}</span>
-                      <span className="text-xs text-slate-500 border border-slate-700 rounded px-1">{stop.platform}</span>
-                      <Button variant="ghost" size="icon" className="h-4 w-4 text-slate-600 hover:text-blue-400 ml-1"><Edit className="w-3 h-3" /></Button>
+                    <div className="flex items-center gap-2 sm:gap-3 mt-1 sm:mt-2 overflow-x-auto no-scrollbar">
+                      <span className="text-[10px] sm:text-xs text-slate-500 font-medium shrink-0">{stop.distance}</span>
+                      <span className="text-[10px] sm:text-xs text-slate-400 bg-slate-800 border border-slate-700/50 rounded-md px-1.5 sm:px-2 py-0.5 font-semibold shrink-0">{stop.platform}</span>
                     </div>
                   </div>
 
                   {/* Right: Departure Time */}
-                  <div className="w-20 text-right">
-                    <div className={cn("text-sm font-medium", stop.isPassed ? "text-slate-500" : "text-red-400")}>
+                  <div className="w-14 sm:w-24 text-right pl-2 sm:pl-4 shrink-0">
+                    <div className={cn("text-xs sm:text-base font-bold",
+                      stop.isPassed ? "text-slate-500" : "text-red-400"
+                    )}>
                       {stop.departureTime}
                     </div>
+                    {!stop.isPassed && !stop.isCurrent && (
+                      <div className="text-[8px] sm:text-[10px] text-slate-500 mt-1 uppercase font-semibold">Scheduled</div>
+                    )}
                   </div>
                 </div>
 
                 {stop.isCurrent && (
-                  <div className="mt-3 bg-slate-800/50 rounded-lg p-3 border border-slate-700">
-                    <div className="text-xs text-blue-400 font-medium mb-1">CURRENTLY HERE</div>
-                    <div className="text-sm text-slate-300">Picking up students. Departing in 2 mins.</div>
+                  <div className="mt-3 sm:mt-4 bg-slate-800/50 backdrop-blur-sm rounded-lg sm:rounded-xl p-2.5 sm:p-4 border border-blue-500/20 shadow-inner">
+                    <div className="flex items-center gap-2 text-[10px] sm:text-xs text-blue-400 font-bold uppercase tracking-widest mb-1 sm:mb-2">
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-blue-400 animate-ping"></span>
+                      Status
+                    </div>
+                    <div className="text-xs sm:text-base text-slate-200 font-medium">Picking up students at <span className="text-white font-bold">{stop.name}</span>.</div>
                   </div>
                 )}
               </div>
@@ -207,6 +222,7 @@ export default function Buses() {
   const [editingRouteId, setEditingRouteId] = useState<string | null>(null);
   const [viewingRoute, setViewingRoute] = useState<any | null>(null);
   const [viewingBus, setViewingBus] = useState<any | null>(null);
+  const [viewingDocument, setViewingDocument] = useState<{ title: string, url: string } | null>(null);
 
   const [newBus, setNewBus] = useState({
     busNumber: "",
@@ -214,7 +230,13 @@ export default function Buses() {
     capacity: 40,
     driver: "",
     status: "idle" as "idle" | "on-route" | "delayed" | "maintenance" | "completed",
-    route: ""
+    route: "",
+    engineNumber: "",
+    documents: {
+      insurance: "",
+      rc: "",
+      pollution: ""
+    }
   });
 
   const [newRoute, setNewRoute] = useState({
@@ -226,12 +248,45 @@ export default function Buses() {
     eveningTime: "15:00"
   });
 
+  const getAssignedBus = (routeName: string) => {
+    if (!routeName) return null;
+    return [...buses].reverse().find(b => {
+      if (!b.route) return false;
+      const normalizedBusRoute = b.route.toLowerCase().replace('route', '').trim();
+      const normalizedRouteName = routeName.toLowerCase().replace('route', '').trim();
+      return normalizedBusRoute === normalizedRouteName;
+    });
+  };
+
+  const getRouteBuses = (routeName: string) => {
+    if (!routeName) return [];
+    return buses.filter(b => {
+      if (!b.route) return false;
+      const normalizedBusRoute = b.route.toLowerCase().replace('route', '').trim();
+      const normalizedRouteName = routeName.toLowerCase().replace('route', '').trim();
+      return normalizedBusRoute === normalizedRouteName;
+    });
+  };
+
 
 
   /* Bus Handlers */
   const openAddBusDialog = () => {
     setEditingBusId(null);
-    setNewBus({ busNumber: "", plate: "", capacity: 40, driver: "", status: "idle", route: "" });
+    setNewBus({
+      busNumber: "",
+      plate: "",
+      capacity: 40,
+      driver: "",
+      status: "idle",
+      route: "",
+      engineNumber: "",
+      documents: {
+        insurance: "",
+        rc: "",
+        pollution: ""
+      }
+    });
     setIsAddBusOpen(true);
   };
 
@@ -243,21 +298,45 @@ export default function Buses() {
       capacity: bus.capacity,
       driver: bus.driver,
       status: bus.status,
-      route: bus.route
+      route: bus.route,
+      engineNumber: bus.engineNumber || "",
+      documents: {
+        insurance: bus.documents?.insurance || "",
+        rc: bus.documents?.rc || "",
+        pollution: bus.documents?.pollution || ""
+      }
     });
     setIsAddBusOpen(true);
   };
 
   const handleAddBus = () => {
     if (!newBus.busNumber) return toast.error("Bus Number required");
+
     if (editingBusId) {
       // @ts-ignore
       updateBus(editingBusId, newBus);
       toast.success("Bus updated");
     } else {
+      // Auto-assign route to new bus
+      let assignedRoute = newBus.route;
+
+      if (!assignedRoute && routes.length > 0) {
+        // Find a route with the least number of buses assigned
+        const routeBusCounts = routes.map(route => ({
+          route: route.name,
+          count: buses.filter(b => b.route === route.name).length
+        }));
+
+        // Sort by count (ascending) and pick the first one
+        routeBusCounts.sort((a, b) => a.count - b.count);
+        assignedRoute = routeBusCounts[0].route;
+      }
+
       // @ts-ignore
-      addBus({ ...newBus, passengers: 0 });
-      toast.success("Bus added");
+      addBus({ ...newBus, route: assignedRoute, passengers: 0 });
+      toast.success(assignedRoute
+        ? `Bus added and assigned to ${assignedRoute}`
+        : "Bus added");
     }
     setIsAddBusOpen(false);
     setEditingBusId(null);
@@ -407,16 +486,30 @@ export default function Buses() {
                       </Select>
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <Label>Assign Driver</Label>
-                    <Select onValueChange={(val) => setNewBus({ ...newBus, driver: val })} value={newBus.driver}>
-                      <SelectTrigger><SelectValue placeholder="Select driver" /></SelectTrigger>
-                      <SelectContent>
-                        {drivers.length > 0 ? drivers.map((d) => (
-                          <SelectItem key={d.id} value={d.name}>{d.name}</SelectItem>
-                        )) : <SelectItem value="john">John Doe (Mock)</SelectItem>}
-                      </SelectContent>
-                    </Select>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Assign Driver</Label>
+                      <Select onValueChange={(val) => setNewBus({ ...newBus, driver: val })} value={newBus.driver}>
+                        <SelectTrigger><SelectValue placeholder="Select driver" /></SelectTrigger>
+                        <SelectContent>
+                          {drivers.length > 0 ? drivers.map((d) => (
+                            <SelectItem key={d.id} value={d.name}>{d.name}</SelectItem>
+                          )) : <SelectItem value="john">John Doe (Mock)</SelectItem>}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Assign Route</Label>
+                      <Select onValueChange={(val) => setNewBus({ ...newBus, route: val })} value={newBus.route}>
+                        <SelectTrigger><SelectValue placeholder="Select route" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">No Route</SelectItem>
+                          {routes.map((r) => (
+                            <SelectItem key={r.id} value={r.name}>{r.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
                 <DialogFooter>
@@ -485,7 +578,7 @@ export default function Buses() {
 
           {/* Bus Details Dialog */}
           <Dialog open={!!viewingBus} onOpenChange={(open) => !open && setViewingBus(null)}>
-            <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none max-w-md">
+            <DialogContent className="p-0 overflow-hidden bg-transparent border-0 shadow-none max-w-sm">
               {viewingBus && (
                 <div className="relative bg-white dark:bg-slate-900 rounded-lg shadow-2xl overflow-hidden">
                   <div className="absolute top-2 right-2 z-20">
@@ -500,27 +593,27 @@ export default function Buses() {
                   </div>
 
                   {/* Gradient Header */}
-                  <div className="h-32 bg-gradient-to-r from-orange-500 to-amber-600 relative">
-                    <div className="absolute -bottom-12 left-8 p-1 bg-white dark:bg-slate-900 rounded-full">
-                      <div className="w-24 h-24 rounded-full bg-slate-200 flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-xl overflow-hidden">
-                        <Bus className="w-12 h-12 text-orange-500" />
+                  <div className="h-24 bg-gradient-to-r from-orange-500 to-amber-600 relative">
+                    <div className="absolute -bottom-10 left-6 p-1 bg-white dark:bg-slate-900 rounded-full">
+                      <div className="w-20 h-20 rounded-full bg-slate-200 flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-xl overflow-hidden">
+                        <Bus className="w-10 h-10 text-orange-500" />
                       </div>
                     </div>
                   </div>
 
-                  <div className="pt-16 px-8 pb-8">
-                    <div className="flex justify-between items-start mb-6">
+                  <div className="pt-12 px-6 pb-6">
+                    <div className="flex justify-between items-start mb-5">
                       <div>
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                           {viewingBus.busNumber}
-                          <Shield className="w-5 h-5 text-orange-500 fill-orange-500" />
+                          <Shield className="w-4 h-4 text-orange-500 fill-orange-500" />
                         </h2>
-                        <p className="text-muted-foreground font-medium">
+                        <p className="text-xs text-muted-foreground font-medium">
                           {viewingBus.plate || "No Registration"}
                         </p>
                       </div>
                       <Badge className={cn(
-                        "px-3 py-1",
+                        "px-2 py-0.5 text-[10px]",
                         viewingBus.status === "on-route" ? "bg-green-100 text-green-700" :
                           viewingBus.status === "maintenance" ? "bg-red-100 text-red-700" :
                             "bg-amber-100 text-amber-700"
@@ -530,81 +623,66 @@ export default function Buses() {
                     </div>
 
                     <div className="grid gap-4">
-                      {/* Capacity */}
-                      <div className="grid grid-cols-1 gap-4">
+                      {/* Technical Details */}
+                      <div className="grid grid-cols-2 gap-3">
                         <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-1">
-                          <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Capacity</span>
-                          <div className="flex items-center gap-2 font-medium">
-                            <Users className="w-4 h-4 text-primary" />
+                          <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Engine No.</span>
+                          <div className="flex items-center gap-2 font-medium text-xs">
+                            <Cpu className="w-3.5 h-3.5 text-primary" />
+                            {viewingBus.engineNumber || "ENG-000-000"}
+                          </div>
+                        </div>
+                        <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-1">
+                          <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Capacity</span>
+                          <div className="flex items-center gap-2 font-medium text-xs">
+                            <Users className="w-3.5 h-3.5 text-primary" />
                             {viewingBus.passengers || 0} / {viewingBus.capacity} Seats
                           </div>
                         </div>
                       </div>
 
-                      {/* Route & Current Stop */}
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
-                            <MapPin className="w-4 h-4" />
-                          </div>
-                          <div>
-                            <p className="text-xs text-muted-foreground">Assigned Route</p>
-                            <p className="font-semibold text-sm">{viewingBus.route || "No Route Assigned"}</p>
-                          </div>
+                      {/* Documents Section */}
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2 px-1">
+                          <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800"></div>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Documents</span>
+                          <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800"></div>
                         </div>
-                        {viewingBus.currentStop && (
-                          <>
-                            <div className="h-px bg-slate-200 dark:bg-slate-700" />
+
+                        <div className="space-y-2">
+                          <button
+                            onClick={() => setViewingDocument({ title: "RC (Registration Certificate)", url: "/assets/docs/mock_rc.png" })}
+                            className="w-full p-3 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-xl flex items-center justify-between transition-colors group text-left"
+                          >
                             <div className="flex items-center gap-3">
-                              <div className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
-                                <Navigation className="w-4 h-4" />
+                              <div className="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                                <FileText className="w-4 h-4 text-blue-600" />
                               </div>
                               <div>
-                                <p className="text-xs text-muted-foreground">Current Stop</p>
-                                <p className="font-semibold text-sm">{viewingBus.currentStop}</p>
+                                <p className="text-[10px] text-muted-foreground font-semibold">RC Number</p>
+                                <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{viewingBus.documents?.rc || "RC-NONE-000"}</p>
                               </div>
                             </div>
-                          </>
-                        )}
-                      </div>
+                            <Image className="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors" />
+                          </button>
 
-                      {/* Driver Info */}
-                      <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
-                              <User className="w-5 h-5" />
+                          <button
+                            onClick={() => setViewingDocument({ title: "Bus Insurance", url: "/assets/docs/mock_insurance.png" })}
+                            className="w-full p-3 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-xl flex items-center justify-between transition-colors group text-left"
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className="w-8 h-8 rounded-lg bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                <Shield className="w-4 h-4 text-green-600" />
+                              </div>
+                              <div>
+                                <p className="text-[10px] text-muted-foreground font-semibold">Insurance No.</p>
+                                <p className="text-xs font-bold text-slate-700 dark:text-slate-200">{viewingBus.documents?.insurance || "INS-NONE-000"}</p>
+                              </div>
                             </div>
-                            <div>
-                              <p className="text-xs text-muted-foreground">Assigned Driver</p>
-                              <p className="font-semibold">{viewingBus.driver || "No Driver Assigned"}</p>
-                              <p className="text-xs text-muted-foreground">
-                                {drivers.find(d => d.name === viewingBus.driver)?.phone || ""}
-                              </p>
-                            </div>
-                          </div>
-                          {viewingBus.driver && drivers.find(d => d.name === viewingBus.driver)?.phone && (
-                            <Button variant="outline" size="sm" className="h-8" asChild>
-                              <a href={`tel:${drivers.find(d => d.name === viewingBus.driver)?.phone}`}>
-                                <Phone className="w-3 h-3 mr-2" /> Call
-                              </a>
-                            </Button>
-                          )}
+                            <Image className="w-4 h-4 text-slate-300 group-hover:text-green-500 transition-colors" />
+                          </button>
                         </div>
                       </div>
-
-                      {/* Location */}
-                      {viewingBus.location && (
-                        <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl">
-                          <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-muted-foreground">Location:</span>
-                            <span className="font-medium">
-                              {viewingBus.location.lat.toFixed(4)}, {viewingBus.location.lng.toFixed(4)}
-                            </span>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -615,46 +693,6 @@ export default function Buses() {
 
         {/* Routes Tab */}
         <TabsContent value="routes" className="space-y-4">
-          <div className="flex justify-end">
-            <Dialog open={isAddRouteOpen} onOpenChange={setIsAddRouteOpen}>
-              <DialogTrigger asChild>
-                <Button className="gap-2">
-                  <Plus className="w-4 h-4" /> Add Route
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Add New Route</DialogTitle>
-                  <DialogDescription>Create a new bus route.</DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="space-y-2">
-                    <Label>Route Name</Label>
-                    <Input
-                      placeholder="Route F - Downtown"
-                      value={newRoute.name}
-                      onChange={e => setNewRoute({ ...newRoute, name: e.target.value })}
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Morning Pickup</Label>
-                      <Input type="time" value={newRoute.morningTime} onChange={e => setNewRoute({ ...newRoute, morningTime: e.target.value })} />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Evening Drop</Label>
-                      <Input type="time" value={newRoute.eveningTime} onChange={e => setNewRoute({ ...newRoute, eveningTime: e.target.value })} />
-                    </div>
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button variant="outline" onClick={() => setIsAddRouteOpen(false)}>Cancel</Button>
-                  <Button onClick={handleAddRoute}>Add Route</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {routes.map((route) => (
               <Card
@@ -694,19 +732,47 @@ export default function Buses() {
                   </div>
                 </CardContent>
                 <div className="px-6 pb-4 pt-0">
-                  <div className="pt-3 border-t flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm font-medium">
-                      <Bus className="w-4 h-4 text-primary" />
-                      {(() => {
-                        const assignedBus = buses.find(b => b.route === route.name || b.route === route.name.replace('Route ', ''));
-                        return assignedBus ? (
-                          <div className="flex flex-col">
-                            <span>{assignedBus.busNumber}</span>
-                            <span className="text-[10px] text-muted-foreground">{assignedBus.plate}</span>
-                          </div>
-                        ) : <span className="text-muted-foreground">No Bus Assigned</span>;
-                      })()}
+                  <div className="pt-3 border-t flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-sm font-medium">
+                        <Bus className="w-4 h-4 text-primary" />
+                        {(() => {
+                          const assignedBus = getAssignedBus(route.name);
+                          return assignedBus ? (
+                            <div className="flex flex-col">
+                              <span>Bus {assignedBus.busNumber}</span>
+                              <span className="text-[10px] text-muted-foreground">{assignedBus.plate}</span>
+                            </div>
+                          ) : <span className="text-muted-foreground">No Bus Assigned</span>;
+                        })()}
+                      </div>
                     </div>
+
+                    {(() => {
+                      const assignedBus = getAssignedBus(route.name);
+                      if (!assignedBus || !assignedBus.driver) return null;
+                      const driverObj = drivers.find(d => d.name === assignedBus.driver);
+                      return (
+                        <div className="flex items-center justify-between pt-1 border-t border-dashed">
+                          <div className="flex items-center gap-2 text-sm">
+                            <User className="w-4 h-4 text-slate-400" />
+                            <div className="flex flex-col">
+                              <span className="font-semibold text-xs">{assignedBus.driver}</span>
+                              {driverObj?.phone && (
+                                <span className="text-[10px] text-muted-foreground">{driverObj.phone}</span>
+                              )}
+                            </div>
+                          </div>
+                          {driverObj?.phone && (
+                            <Button size="icon" variant="ghost" className="h-7 w-7 rounded-full" asChild>
+                              <a href={`tel:${driverObj.phone}`}>
+                                <Phone className="w-3 h-3" />
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               </Card>
@@ -715,7 +781,7 @@ export default function Buses() {
 
           {/* Route Live Map View Dialog */}
           <Dialog open={!!viewingRoute} onOpenChange={(open) => !open && setViewingRoute(null)}>
-            <DialogContent className="max-w-[450px] w-full p-0 overflow-hidden flex flex-col h-[80vh] bg-slate-950 border-slate-800">
+            <DialogContent className="sm:max-w-4xl max-w-[95vw] w-full p-0 overflow-hidden flex flex-col h-[92vh] sm:h-[90vh] bg-slate-950 border-slate-800">
               <div className="flex items-center justify-between p-4 border-b border-slate-800 bg-slate-900">
                 <div>
                   <DialogTitle className="text-lg font-bold flex items-center gap-2 text-white">
@@ -726,17 +792,40 @@ export default function Buses() {
                       Live Status
                     </DialogDescription>
                     {(() => {
-                      const assignedBus = buses.find(b => b.route === viewingRoute?.name || b.route === viewingRoute?.name.replace('Route ', ''));
+                      const assignedBus = getAssignedBus(viewingRoute?.name || '');
                       if (!assignedBus) return null;
+                      const driverObj = drivers.find(d => d.name === assignedBus.driver);
                       return (
-                        <div className="flex items-center gap-3 text-blue-400 mt-1">
-                          <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center">
-                            <Bus className="w-4 h-4" />
+                        <div className="flex flex-col gap-2 mt-2">
+                          <div className="flex items-center gap-3 text-blue-400">
+                            <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center">
+                              <Bus className="w-4 h-4" />
+                            </div>
+                            <div className="flex flex-col">
+                              <span className="text-xs font-bold">Bus {assignedBus.busNumber}</span>
+                              <span className="text-[10px] text-slate-400">{assignedBus.plate}</span>
+                            </div>
                           </div>
-                          <div className="flex flex-col">
-                            <span className="text-xs font-bold">Bus {assignedBus.busNumber}</span>
-                            <span className="text-[10px] text-slate-400">{assignedBus.plate}</span>
-                          </div>
+                          {assignedBus.driver && (
+                            <div className="flex items-center gap-3 text-slate-300 border-t border-slate-800 pt-2 pb-1">
+                              <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">
+                                <User className="w-4 h-4 text-slate-400" />
+                              </div>
+                              <div className="flex flex-col flex-1">
+                                <span className="text-xs font-semibold">{assignedBus.driver}</span>
+                                {driverObj?.phone && (
+                                  <span className="text-[10px] text-slate-500">{driverObj.phone}</span>
+                                )}
+                              </div>
+                              {driverObj?.phone && (
+                                <Button size="icon" variant="ghost" className="h-8 w-8 text-blue-400" asChild>
+                                  <a href={`tel:${driverObj.phone}`}>
+                                    <Phone className="w-4 h-4" />
+                                  </a>
+                                </Button>
+                              )}
+                            </div>
+                          )}
                         </div>
                       );
                     })()}
@@ -748,7 +837,7 @@ export default function Buses() {
                 {viewingRoute && (
                   <RouteTimeline
                     route={viewingRoute}
-                    buses={buses.filter(b => b.route === viewingRoute.name || b.route === viewingRoute.name.replace('Route ', ''))}
+                    buses={getRouteBuses(viewingRoute.name)}
                   />
                 )}
               </div>
@@ -758,6 +847,38 @@ export default function Buses() {
 
 
       </Tabs>
+
+      {/* Document Image Preview Dialog */}
+      <Dialog open={!!viewingDocument} onOpenChange={(open) => !open && setViewingDocument(null)}>
+        <DialogContent className="max-w-3xl p-0 overflow-hidden bg-transparent border-0 shadow-none">
+          <div className="relative group">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4 z-50 h-10 w-10 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur-sm transition-all"
+              onClick={() => setViewingDocument(null)}
+            >
+              <X className="w-5 h-5" />
+            </Button>
+
+            <div className="relative w-full flex items-center justify-center p-2">
+              {viewingDocument && (
+                <img
+                  src={viewingDocument.url}
+                  alt={viewingDocument.title}
+                  className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-white/10"
+                />
+              )}
+            </div>
+
+            {viewingDocument && (
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-white text-sm font-bold tracking-wide opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                {viewingDocument.title}
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

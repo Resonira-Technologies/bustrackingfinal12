@@ -414,6 +414,19 @@ export default function Drivers() {
                                             </div>
                                         </div>
 
+                                        {/* Address */}
+                                        {driver.address && (
+                                            <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-900/40 flex items-center justify-center shrink-0">
+                                                    <MapPin className="w-4 h-4 text-slate-500" />
+                                                </div>
+                                                <div className="overflow-hidden">
+                                                    <p className="text-xs text-muted-foreground">Address</p>
+                                                    <p className="text-sm font-semibold truncate" title={driver.address}>{driver.address}</p>
+                                                </div>
+                                            </div>
+                                        )}
+
                                         {/* Bus & Rating Row */}
                                         <div className="grid grid-cols-2 gap-3">
                                             <div className="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center gap-3">

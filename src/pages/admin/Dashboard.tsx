@@ -120,7 +120,7 @@ export default function Dashboard() {
             iconBgColor="bg-secondary/10"
           />
         </div>
-        <div onClick={() => navigate("/admin/attendance")} className="cursor-pointer transition-transform hover:scale-[1.02]">
+        <div className="transition-transform hover:scale-[1.02]">
           <StatCard
             title="Morning Boarded"
             value={stats.morningBoarded.toLocaleString()}
@@ -131,7 +131,7 @@ export default function Dashboard() {
             iconBgColor="bg-orange-500/10"
           />
         </div>
-        <div onClick={() => navigate("/admin/attendance")} className="cursor-pointer transition-transform hover:scale-[1.02]">
+        <div className="transition-transform hover:scale-[1.02]">
           <StatCard
             title="Evening Returns"
             value={stats.eveningReturns.toLocaleString()}
