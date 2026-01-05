@@ -98,3 +98,14 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 - **Track**: Full-screen live tracking.
 - **Alerts**: History of all notifications.
 - **Profile**: Student details and RFID status.
+
+### Admin Fleet Management Features
+
+#### 1. Vehicle Documentation & Verification
+- **Digital Vault**: Secure storage and display of vehicle registration (RC) and Insurance documents.
+- **Lightbox Preview**: High-resolution, backdrop-blurred photo previews for quick document verification of any bus in the fleet.
+- **Smart Card Sample**: Realistic Smart Card style RC mockups for the Indian transport context.
+
+#### 2. Advanced Attendance & Scan Logs
+- **Targeted Filters**: Interactive "Morning Boarded" and "Evening Returns" visual toggle buttons for rapid section-based log review.
+- **Live Status Dialog**: Refactored the "Where is my Train" style route dialog, now fully responsive and optimized for mobile screens.

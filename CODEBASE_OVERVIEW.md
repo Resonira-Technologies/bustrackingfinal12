@@ -19,6 +19,7 @@ The **Bus Management System (BMS)** is a comprehensive solution for managing sch
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Maps**: [Leaflet](https://leafletjs.com/) with [react-leaflet](https://react-leaflet.js.org/)
 - **Simulation**: Integrated bus movement and status simulation in `DataContext`.
+- **Environment**: Optimized Node.js memory limits (`NODE_OPTIONS=--max-old-space-size=4096`) for large project building.
 
 ---
 
@@ -27,11 +28,11 @@ The **Bus Management System (BMS)** is a comprehensive solution for managing sch
 /src
 ├── assets/          # Static assets (images, fonts, etc.)
 ├── components/      # Reusable UI components
-│   ├── ui/          # Low-level UI primitives (buttons, inputs, cards)
-│   ├── auth/        # Authentication related components
-│   ├── dashboard/   # Dashboard-specific widgets
-│   ├── Map.tsx      # Core live tracking component (Leaflet)
 │   └── ...          # Feature-specific components
+├── assets/          # Project assets
+└── public/
+    └── assets/
+        └── docs/    # Secure vehicle documentation (RC, Insurance photos)
 ├── context/         # React Context providers (DataContext.tsx)
 ├── data/            # Mock data and static configuration
 ├── hooks/           # Custom React hooks (useData, etc.)
@@ -77,7 +78,7 @@ The application uses `react-router-dom` for client-side routing.
 ### `DataContext.tsx`
 The backbone of the application's state. It manages:
 - **Entities**: Students, Buses, Routes, Alerts, Drivers.
-- **Persistence**: Synchronizes state with `localStorage` for offline-like behavior.
+- **Persistence**: Synchronizes state with `localStorage` for offline-like behavior. Uses `DATA_VERSION` (currently `v11`) for schema migrations.
 - **Simulation**: A `useEffect` interval simulates bus movement, speed changes, and status updates every 3 seconds.
 - **CRUD Operations**: Centralized functions for updating any entity.
 
@@ -91,10 +92,9 @@ The primary visualization tool.
 ---
 
 ## 6. Key Implementation Details
-- **Responsive Design**: Mobile-first layouts for Parents and Drivers; Desktop-optimized for Admins.
-- **Animations**: Using Framer Motion (implicitly in some components) or CSS transitions for smooth UI updates.
-- **Theming**: Tailwind-based theme with custom palettes (likely defined in `tailwind.config.ts`).
-- **Error Handling**: `ErrorBoundary` component wraps the routes to catch and display UI failures.
+- **Interactive Verification**: High-resolution lightbox for vehicle documentation (RC/Insurance) in the admin fleet view.
+- **Advanced Filtering**: Targeted "Morning Boarded" and "Evening Returns" visual toggles in attendance logs.
+- **Responsive Dialogs**: Full adaptation of Route Live Status views for mobile devices ("Where is my Train" style).
 
 ---
-*Last Updated: 2025-12-27*
+*Last Updated: 2026-01-05*

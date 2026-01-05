@@ -17,7 +17,9 @@ bus-erp/
 │
 ├── public/               # Static assets served directly
 │   ├── _redirects        # Netlify SPA redirect rules
-│   └── favicon.ico       # Browser tab icon
+│   ├── favicon.ico       # Browser tab icon
+│   └── assets/
+│       └── docs/         # Secure vehicle documentation (RC, Insurance photos)
 │
 └── src/                  # Main application source code
     ├── main.tsx          # Entry point (React rendering)

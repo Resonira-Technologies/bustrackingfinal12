@@ -70,6 +70,9 @@ A centralized **Bus Management System** designed to bridge the gap between schoo
 | `location` | `obj` | `{ lat: number, lng: number }` |
 | `speed` | `number` | Real-time velocity in km/h |
 | `isHarshDriving` | `boolean` | Flag for sudden braking/acceleration |
+| `plate` | `string` | Vehicle registration number (e.g. TS 09 UA 1234) |
+| `engineNumber` | `string` | Unique engine identifier |
+| `documents` | `object` | URLs to RC and Insurance photo assets |
 | `isSOS` | `boolean` | Emergency panic button state |
 
 ---
@@ -105,8 +108,8 @@ Located in `src/context/DataContext.tsx`, the system uses a 3-second heartbeat:
 
 ### Admin Dashboard
 - **Live Fleet Tracking**: Global map view of all buses.
-- **Management**: Student CRUD, Route editing.
-- **Analytics**: Attendance charts and scan logs.
+- **Management**: Student CRUD, Route editing, and **Document Verification** (Smart Card RC/Insurance lightbox previews).
+- **Analytics**: Attendance logs with interactive **Morning/Evening filter toggles**.
 
 ### Parent Portal
 - **Child's Bus Live Tracking**: Focused view of assigned bus.
@@ -134,3 +137,4 @@ Located in `src/context/DataContext.tsx`, the system uses a 3-second heartbeat:
 - **Aesthetics First**: Maintain premium, glassmorphic design.
 - **Type Safety**: Strictly define interfaces in `/types`. Avoid `any`.
 - **Simulated Real-time**: Integrate new features with the `DataContext` simulation loop.
+- **Build Performance**: If `npm start` fails due to memory, use: `$env:NODE_OPTIONS='--max-old-space-size=4096'; npm start`.
