@@ -75,6 +75,23 @@ A centralized **Bus Management System** designed to bridge the gap between schoo
 | `documents` | `object` | URLs to RC and Insurance photo assets |
 | `isSOS` | `boolean` | Emergency panic button state |
 
+### Route Object
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `string` | Unique identifier |
+| `name` | `string` | Strict alphabetical name (e.g., RouteA) |
+| `morningTime` | `string` | Scheduled start time for morning |
+| `eveningTime` | `string` | Scheduled start time for evening |
+| `stops` | `string[]` | Ordered list of stop names |
+
+### Driver Object
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `id` | `string` | Unique identifier |
+| `name` | `string` | Full name |
+| `bloodGroup` | `string` | Medical blood group (e.g., O+) |
+| `license` | `string` | Driving license number |
+
 ---
 
 ## 5. Operational Logic & Simulations
@@ -108,13 +125,15 @@ Located in `src/context/DataContext.tsx`, the system uses a 3-second heartbeat:
 
 ### Admin Dashboard
 - **Live Fleet Tracking**: Global map view of all buses.
-- **Management**: Student CRUD, Route editing, and **Document Verification** (Smart Card RC/Insurance lightbox previews).
-- **Analytics**: Attendance logs with interactive **Morning/Evening filter toggles**.
+- **Management**: Student CRUD, **Automated Route Generation** (Strict alphabetical naming), and **Document Verification**.
+- **Unified Workflow**: Seamless "Add Route" flow that creates/assigns buses automatically.
+- **Analytics**: Attendance logs with interactive **Morning/Evening filter toggles** (Corrected PM timing for evening returns).
 
 ### Parent Portal
 - **Child's Bus Live Tracking**: Focused view of assigned bus.
 - **Geo-Alerts**: Proximity notifications (1km).
-- **Contact**: Quick-dial for transport desk.
+- **Notifications**: Combined **Push + SMS** alerts for boarding/alighting events.
+- **Contact**: Quick-dial **Call Support** for transport desk.
 
 ### Driver Dashboard
 - **Navigation**: Route visualization.

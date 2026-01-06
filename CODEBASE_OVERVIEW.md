@@ -95,6 +95,7 @@ The primary visualization tool.
 - **Interactive Verification**: High-resolution lightbox for vehicle documentation (RC/Insurance) in the admin fleet view.
 - **Advanced Filtering**: Targeted "Morning Boarded" and "Evening Returns" visual toggles in attendance logs.
 - **Responsive Dialogs**: Full adaptation of Route Live Status views for mobile devices ("Where is my Train" style).
+- **Automated Fleet Ops**: Strict alphabetical route generation (RouteA...RouteZ) and auto-creation of buses/routes during assignment.
 
 ---
 *Last Updated: 2026-01-05*

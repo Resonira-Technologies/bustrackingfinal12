@@ -109,3 +109,8 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 #### 2. Advanced Attendance & Scan Logs
 - **Targeted Filters**: Interactive "Morning Boarded" and "Evening Returns" visual toggle buttons for rapid section-based log review.
 - **Live Status Dialog**: Refactored the "Where is my Train" style route dialog, now fully responsive and optimized for mobile screens.
+- **Automated Routing**: Routes are now auto-generated (RouteA, RouteB...) with a seamless workflow to create and assign buses directly from the route view.
+
+### Notification System Update
+- **Unified Channels**: Parent notifications now combine **Push + SMS** into a single preference for simplified management.
+- **Terminology**: "Transport Hotline" updated to "Call Support" for clarity.
