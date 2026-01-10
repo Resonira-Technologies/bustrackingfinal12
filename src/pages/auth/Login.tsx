@@ -153,25 +153,6 @@ export default function Login() {
               ) : "Sign In"}
             </Button>
           </form>
-
-          <div className="mt-8 p-4 rounded-xl bg-primary/5 border border-primary/10 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-primary/70">Demo Credentials</span>
-              <Button variant="outline" size="sm" onClick={autofill} className="h-7 text-xs bg-background">
-                Auto-fill
-              </Button>
-            </div>
-            <div className="grid grid-cols-1 gap-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Email:</span>
-                <code className="text-primary font-mono">{DEFAULT_CREDENTIALS[role as keyof typeof DEFAULT_CREDENTIALS]?.email}</code>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">Password:</span>
-                <code className="text-primary font-mono">{DEFAULT_CREDENTIALS[role as keyof typeof DEFAULT_CREDENTIALS]?.password}</code>
-              </div>
-            </div>
-          </div>
         </CardContent>
         <CardFooter className="justify-center border-t py-4 text-xs text-muted-foreground">
           © 2024 BusTrack Analytics. All rights reserved.
