@@ -8,9 +8,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { toast } from "sonner";
 
 const DEFAULT_CREDENTIALS = {
-  admin: { email: "admin@bustrack.com", password: "123" },
-  parent: { email: "parent@bustrack.com", password: "123" },
-  driver: { email: "driver@bustrack.com", password: "123" },
+  admin: { email: "admin@resonira.com", password: "123456" },
+  parent: { email: "parent@resonira.com", password: "123456" },
+  driver: { email: "driver@resonira.com", password: "123456" },
 };
 
 export default function Login() {
