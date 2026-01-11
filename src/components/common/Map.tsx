@@ -101,7 +101,7 @@ interface MapProps {
     showDriverCard?: boolean;
 }
 
-const defaultCenter: [number, number] = [17.3850, 78.4867];
+const defaultCenter: [number, number] = [18.4386, 79.1288];
 
 // Rapido-style CSS
 const rapidoStyles = `

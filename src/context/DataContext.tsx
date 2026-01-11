@@ -41,7 +41,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const DATA_VERSION = "v11"; // Increment version to clear stale data
+    const DATA_VERSION = "v12"; // Increment version to clear stale data
 
     const getInitialData = <T,>(key: string, fallback: T): T => {
         const version = localStorage.getItem('data_version');
